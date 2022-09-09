@@ -1,0 +1,24 @@
+{
+  "name": "ssg-cli-tool",
+  "version": "0.1.0",
+  "description": "A command-line interface SSG tool used for generating a complete HTML web site from raw data and files.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexsam29/ssg-cli-tool.git"
+  },
+  "author": "Alexander Samaniego",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alexsam29/ssg-cli-tool/issues"
+  },
+  "homepage": "https://github.com/alexsam29/ssg-cli-tool#readme",
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "commander": "^9.4.0",
+    "conf": "^10.2.0"
+  }
+}
