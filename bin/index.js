@@ -14,8 +14,18 @@ const options = yargs.usage("Usage: -i <input>").option("i", {
 }).argv;
 
 // Output file name
-const output = `Path of file or folder: ${options.input}!`;
-console.log(output);
+const output = `Path of file or folder: ${options.input}`;
+console.log(chalk.bgWhite(output));
+
+// Create Directory
+var dir = ".\\dist";
+if (fs.existsSync(dir)) {
+  fs.rmSync(dir, { recursive: true, force: true });
+  fs.mkdirSync(dir);
+} else if (!fs.existsSync(dir)) {
+  console.log(chalk.blue("New directory created: .\\dist"));
+  fs.mkdirSync(dir);
+}
 
 // Read file and generate HTML
 fs.readFile(options.input, (err, data) => {
@@ -66,12 +76,24 @@ function HTMLcreate(filename, content) {
     body: newBody,
   });
 
-  fs.writeFile(`${filename.split(".")[0]}.html`, html, function (err) {
-    if (err){
+  fs.writeFile(
+    `.\\dist\\${
+      filename.substring(filename.lastIndexOf("\\") + 1).split(".")[0]
+    }.html`,
+    html,
+    function (err) {
+      if (err) {
         console.log(err);
+      } else {
+        console.log(
+          chalk.green.bold(
+            "HTML file created --> Path: " +
+              `.\\dist\\${
+                filename.substring(filename.lastIndexOf("\\") + 1).split(".")[0]
+              }.html`
+          )
+        );
+      }
     }
-    else{
-        console.log(chalk.green.bold('HTML file created --> Path: ' + `${filename.split(".")[0]}.html`))
-    }
-  });
+  );
 }
