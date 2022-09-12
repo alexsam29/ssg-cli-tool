@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 const yargs = require("yargs");
+const path = require("path");
+const fs = require("fs");
 
+// Get CLI arguments
 const options = yargs.usage("Usage: -i <input>").option("i", {
   alias: "input",
   describe: "File name",
@@ -8,14 +11,40 @@ const options = yargs.usage("Usage: -i <input>").option("i", {
   demandOption: true,
 }).argv;
 
+// Output file name
 const output = `This is the file name you chose, ${options.input}!`;
-
 console.log(output);
 
-const fs = require("fs");
+// Read file
 fs.readFile(options.input, (err, data) => {
   if (err) {
-    console.error(err);
+    if (err.code == "EISDIR") {
+      fs.readdir(options.input, function (err, filenames) {
+        if (err) {
+          console.log(err);
+          return;
+        }
+        filenames.forEach(function (filename) {
+          fs.readFile(
+            options.input + "\\" + filename,
+            "utf-8",
+            function (err, content) {
+              if (err) {
+                console.log(err);
+                return;
+              } else if (path.extname(filename) == ".txt") {
+                console.log(content.toString());
+              }
+            }
+          );
+        });
+      });
+      return;
+    }
+    console.log(err);
+    return;
+  } else if (path.extname(options.input) != ".txt") {
+    console.log("Please select a text file.");
     return;
   }
   console.log(data.toString());
