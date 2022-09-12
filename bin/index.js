@@ -2,6 +2,8 @@
 const yargs = require("yargs");
 const path = require("path");
 const fs = require("fs");
+const createHTML = require("create-html");
+const chalk = require("chalk");
 
 // Get CLI arguments
 const options = yargs.usage("Usage: -i <input>").option("i", {
@@ -12,10 +14,10 @@ const options = yargs.usage("Usage: -i <input>").option("i", {
 }).argv;
 
 // Output file name
-const output = `This is the file name you chose, ${options.input}!`;
+const output = `Path of file or folder: ${options.input}!`;
 console.log(output);
 
-// Read file
+// Read file and generate HTML
 fs.readFile(options.input, (err, data) => {
   if (err) {
     if (err.code == "EISDIR") {
@@ -33,7 +35,7 @@ fs.readFile(options.input, (err, data) => {
                 console.log(err);
                 return;
               } else if (path.extname(filename) == ".txt") {
-                console.log(content.toString());
+                HTMLcreate(options.input + "\\" + filename, content.toString());
               }
             }
           );
@@ -44,8 +46,32 @@ fs.readFile(options.input, (err, data) => {
     console.log(err);
     return;
   } else if (path.extname(options.input) != ".txt") {
-    console.log("Please select a text file.");
+    console.log(chalk.red.bold("Please select a text file."));
     return;
   }
-  console.log(data.toString());
+  HTMLcreate(options.input, data.toString());
 });
+
+// HTML file creation
+function HTMLcreate(filename, content) {
+  var body = content.split("\n\r");
+  var newBody = "";
+
+  body.forEach(function (line) {
+    newBody += "<p>" + line + "<p>";
+  });
+
+  var html = createHTML({
+    title: filename,
+    body: newBody,
+  });
+
+  fs.writeFile(`${filename.split(".")[0]}.html`, html, function (err) {
+    if (err){
+        console.log(err);
+    }
+    else{
+        console.log(chalk.green.bold('HTML file created --> Path: ' + `${filename.split(".")[0]}.html`))
+    }
+  });
+}
