@@ -77,37 +77,30 @@ fs.readFile(options.input, (err, data) => {
 
 // HTML file creation
 function HTMLcreate(filename, content) {
+    var title = content.split("\r\n")[0];
     var body = content.split("\n\r");
-    var newBody =
-        "<h1>" +
-        filename.substring(filename.lastIndexOf("\\") + 1).split(".")[0] +
-        "</h1>";
+    var newBody = "<h1>" + title + "</h1>";
 
-    body.forEach(function (line) {
-        newBody += "<p>" + line + "</p>";
+    body.forEach(function (line, index) {
+        if (index != 0){
+            newBody += "<p>" + line + "</p>";
+        }
     });
 
     var html = createHTML({
-        title: filename,
+        title: title,
         body: newBody,
     });
 
-    fs.writeFile(
-        `${dir + "\\" + filename.substring(filename.lastIndexOf("\\") + 1).split(".")[0]
-        }.html`,
-        html,
-        function (err) {
-            if (err) {
-                console.log(err);
-            } else {
-                console.log(
-                    chalk.green.bold(
-                        "HTML file created --> Path: " +
-                        `${dir + "\\" + filename.substring(filename.lastIndexOf("\\") + 1).split(".")[0]
-                        }.html`
-                    )
-                );
-            }
+    fs.writeFile(`${dir + "\\" + title}.html`, html, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(
+                chalk.green.bold(
+                    "HTML file created --> Path: " + `${dir + "\\" + title}.html`
+                )
+            );
         }
-    );
+    });
 }
