@@ -44,35 +44,22 @@ if (fs.existsSync(dir)) {
 fs.readFile(options.input, (err, data) => {
     if (err) {
         if (err.code == "EISDIR") {
-            fs.readdir(options.input, function (err, filenames) {
-                if (err) {
-                    console.log(err);
-                    return;
+            var filenames = fs.readdirSync(options.input);
+            filenames.forEach(function (filename) {
+                var content = fs.readFileSync(options.input + "\\" + filename, "utf-8");
+                if (path.extname(filename) == ".txt") {
+                    HTMLcreate(options.input + "\\" + filename, content.toString());
                 }
-                filenames.forEach(function (filename) {
-                    fs.readFile(
-                        options.input + "\\" + filename,
-                        "utf-8",
-                        function (err, content) {
-                            if (err) {
-                                console.log(err);
-                                return;
-                            } else if (path.extname(filename) == ".txt") {
-                                HTMLcreate(options.input + "\\" + filename, content.toString());
-                            }
-                        }
-                    );
-                });
             });
-            return;
+            indexCreate(dir);
         }
-        console.log(err);
         return;
     } else if (path.extname(options.input) != ".txt") {
         console.log(chalk.red.bold("Please select a text file."));
         return;
     }
     HTMLcreate(options.input, data.toString());
+    indexCreate(dir);
 });
 
 // HTML file creation
@@ -82,7 +69,7 @@ function HTMLcreate(filename, content) {
     var newBody = "<h1>" + title + "</h1>";
 
     body.forEach(function (line, index) {
-        if (index != 0){
+        if (index != 0) {
             newBody += "<p>" + line + "</p>";
         }
     });
@@ -92,15 +79,29 @@ function HTMLcreate(filename, content) {
         body: newBody,
     });
 
-    fs.writeFile(`${dir + "\\" + title}.html`, html, function (err) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(
-                chalk.green.bold(
-                    "HTML file created --> Path: " + `${dir + "\\" + title}.html`
-                )
-            );
-        }
+    fs.writeFileSync(`${dir + "\\" + title}.html`, html);
+    console.log(
+        chalk.green.bold(
+            "HTML file created --> Path: " + `${dir + "\\" + title}.html`
+        )
+    );
+}
+
+// Create index HTML file
+function indexCreate(dir) {
+    var filenames = fs.readdirSync(dir);
+    var body = "<ul>\n";
+    filenames.forEach(function (filename) {
+        body += `<li><a href=".\\${filename}">${filename.split(".")[0]}</a></li>`;
     });
+    body += "</ul>";
+    var html = createHTML({
+        title: "index",
+        body: body,
+    });
+
+    fs.writeFileSync(`${dir}\\index.html`, html);
+    console.log(
+        chalk.green.bold("HTML file created --> Path: " + `${dir}\\index.html`)
+    );
 }
