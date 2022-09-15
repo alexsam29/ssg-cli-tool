@@ -4,10 +4,19 @@ const path = require("path");
 const fs = require("fs");
 const createHTML = require("create-html");
 const chalk = require("chalk");
+const { version } = require("../package.json");
+const { name } = require("../package.json");
+const { author } = require("../package.json");
 
 // Get CLI arguments
 const options = yargs
     .usage("Usage: -i <input>")
+    .help("help")
+    .alias("help", "h")
+    .version(
+        chalk.bold(`\nName: ${name}\nVersion: ${version}\nAuthor: ${author}\n`)
+    )
+    .alias("version", "v")
     .option("i", {
         alias: "input",
         describe: "File name",
