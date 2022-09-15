@@ -9,12 +9,13 @@
  ## Instructions
  1.  Clone or download the repository on to your local machine.  Remember the file location!
  2.  Open a terminal or command window and move to the directory where the repository was downloaded to.
- 3.  Run the SSG tool by inputting a file or folder path.  
+ 3.  Before running the tool, run the command ```npm install -g``` to install npm packages.
+ 4.  Run the SSG tool by inputting a file or folder path.  
  ```
  ssg -i file_path
  ```
- 4. If a file was specified, an HTML file will be created and added into the ```dist``` directory.  If a directory was specified, HTML files will be created for every text file in the directory and they will be added into the ```dist``` directory.
- 5. [OPTIONAL] Specify a directory to output the HTML files to by adding the path as a second argument.  If the directory does not exist, a new one will be created.  If it does exist, the current contents will be deleted and only the HTML files will be added.
+ 5. If a file was specified, an HTML file will be created and added into the ```dist``` directory.  If a directory was specified, HTML files will be created for every text file in the directory and they will be added into the ```dist``` directory.
+ 6. [OPTIONAL] Specify a directory to output the HTML files to by adding the path as a second argument.  If the directory does not exist, a new one will be created.  If it does exist, the current contents will be deleted and only the HTML files will be added.
  ```
  ssg -i file_path -o directoryPath
  ```
