@@ -57,7 +57,7 @@ fs.readFile(options.input, (err, data) => {
             filenames.forEach(function (filename) {
                 var content = fs.readFileSync(options.input + "\\" + filename, "utf-8");
                 if (path.extname(filename) == ".txt") {
-                    HTMLcreate(options.input + "\\" + filename, content.toString());
+                    HTMLcreate(content.toString());
                 }
             });
             indexCreate(dir);
@@ -67,12 +67,12 @@ fs.readFile(options.input, (err, data) => {
         console.log(chalk.red.bold("Please select a text file."));
         return;
     }
-    HTMLcreate(options.input, data.toString());
+    HTMLcreate(data.toString());
     indexCreate(dir);
 });
 
 // HTML file creation
-function HTMLcreate(filename, content) {
+function HTMLcreate(content) {
     var title = content.split("\r\n")[0];
     var body = content.split("\n\r");
     var newBody = "<h1>" + title + "</h1>";
