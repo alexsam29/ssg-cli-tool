@@ -56,3 +56,7 @@
  ```
  ssg -i .\testFiles -o .\anotherFolder
  ```
+## Optional Features Implemented
+- Title parsed from text files. It will populate the ```<title>``` tag and add a ```<h1>``` tag to the top of the body.
+- Allow the user to specify a different output directory using --output or -o. If not specified, dist will be used, but if the user specifies a different output path, it will use that.  If the directory does not exist, a new directory will be created.
+- If the user specifies a folder for the input, it will automatically generate an index.html file, which has relative links to each of the generated HTML files.
