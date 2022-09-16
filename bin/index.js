@@ -29,16 +29,22 @@ const options = yargs
         type: "string",
     }).argv;
 
-// Output file name
-const output = `Path of file or folder: ${options.input}`;
-console.log(chalk.bgWhite(output));
-
 // Create Directory
 var dir;
 if (options.output) {
     dir = options.output;
-} else {
+} else if (options.input) {
+    // Output file/directory path
+    var inputPath = `Path of file or folder: ${options.input}`;
+    console.log(chalk.bgWhite(inputPath));
     dir = ".\\dist";
+} else {
+    console.log(
+        chalk.red.bold(
+            "\nError. A filename or folder is require for option -i/--input.\n\nEx: ssg -i file_path\n"
+        )
+    );
+    return;
 }
 
 if (fs.existsSync(dir)) {
