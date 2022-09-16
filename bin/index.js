@@ -121,7 +121,8 @@ function indexCreate(dir) {
 
     // Add links to HTML body
     filenames.forEach(function (filename) {
-        body += `<li><a href=".\\${filename}">${filename.split(".")[0]}</a></li>`;
+        body += `<li><a href="${dir}\\${filename}">${filename.split(".")[0]
+            }</a></li>`;
     });
     body += "</ul>";
 
@@ -131,8 +132,8 @@ function indexCreate(dir) {
     });
 
     // Write to HTML file
-    fs.writeFileSync(`${dir}\\index.html`, html);
+    fs.writeFileSync(`index.html`, html);
     console.log(
-        chalk.green.bold("HTML file created --> Path: " + `${dir}\\index.html`)
+        chalk.green.bold("HTML file created --> Path: " + `.\\index.html`)
     );
 }
