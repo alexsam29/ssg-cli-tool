@@ -72,9 +72,12 @@ console.log(chalk.blue(`New directory created: ${dir}`));
 if (isDirectory) {
     var filenames = fs.readdirSync(options.input);
     filenames.forEach(function (filename) {
-        var content = fs.readFileSync(options.input + "\\" + filename, "utf-8");
-        if (path.extname(filename) == ".txt") {
-            HTMLcreate(filename.split(".")[0], content.toString());
+        var filePath = options.input + "\\" + filename;
+        if (fs.lstatSync(filePath).isFile()) {
+            var content = fs.readFileSync(filePath, "utf-8");
+            if (path.extname(filename) == ".txt") {
+                HTMLcreate(filename.split(".")[0], content);
+            }
         }
     });
     indexCreate(dir);
