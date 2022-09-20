@@ -31,6 +31,17 @@ const options = yargs
 
 var dir;
 var inputPath = `Path of file or folder: ${options.input}`;
+var isDirectory = false;
+var isFile = false;
+
+// Determine if input is a valid file or directory
+try {
+    isDirectory = fs.lstatSync(options.input).isDirectory();
+    isFile = fs.lstatSync(options.input).isFile();
+} catch (error) {
+    console.log(chalk.red.bold("\nPlease enter a valid file/directory path.\n"));
+    return;
+}
 
 // Create directory.  If no input argument, then output error msg and exit
 if (options.output) {
@@ -57,33 +68,31 @@ if (fs.existsSync(dir)) {
 fs.mkdirSync(dir);
 console.log(chalk.blue(`New directory created: ${dir}`));
 
-// Read file and generate HTML
-fs.readFile(options.input, (err, data) => {
-    if (err) {
-        // If file path is a directory, read all files and create HTML
-        if (err.code == "EISDIR") {
-            var filenames = fs.readdirSync(options.input);
-            filenames.forEach(function (filename) {
-                var content = fs.readFileSync(options.input + "\\" + filename, "utf-8");
-                if (path.extname(filename) == ".txt") {
-                    HTMLcreate(filename.split(".")[0], content.toString());
-                }
-            });
-            indexCreate(dir);
+// Read directory or file path and generate HTML
+if (isDirectory) {
+    var filenames = fs.readdirSync(options.input);
+    filenames.forEach(function (filename) {
+        var content = fs.readFileSync(options.input + "\\" + filename, "utf-8");
+        if (path.extname(filename) == ".txt") {
+            HTMLcreate(filename.split(".")[0], content.toString());
         }
-        return;
-    } else if (path.extname(options.input) != ".txt") {
-        // If input file is not a txt file, output error msg
-        console.log(chalk.red.bold("Please select a text file."));
-        return;
-    }
-    // Create HTML for single txt file
-    HTMLcreate(
-        options.input.split("\\").slice(-1)[0].split(".")[0],
-        data.toString()
-    );
+    });
     indexCreate(dir);
-});
+} else if (isFile) {
+    fs.readFile(options.input, (err, data) => {
+        if (path.extname(options.input) != ".txt") {
+            // If input file is not a txt file, output error msg
+            console.log(chalk.red.bold("Please select a text file."));
+            return;
+        }
+        // Create HTML for single txt file
+        HTMLcreate(
+            options.input.split("\\").slice(-1)[0].split(".")[0],
+            data.toString()
+        );
+        indexCreate(dir);
+    });
+}
 
 // HTML file creation
 function HTMLcreate(filename, content) {
