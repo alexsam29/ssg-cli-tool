@@ -79,19 +79,15 @@ if (isDirectory) {
     });
     indexCreate(dir);
 } else if (isFile) {
-    fs.readFile(options.input, (err, data) => {
-        if (path.extname(options.input) != ".txt") {
-            // If input file is not a txt file, output error msg
-            console.log(chalk.red.bold("Please select a text file."));
-            return;
-        }
-        // Create HTML for single txt file
-        HTMLcreate(
-            options.input.split("\\").slice(-1)[0].split(".")[0],
-            data.toString()
-        );
-        indexCreate(dir);
-    });
+    // If input file is not a txt file, output error msg
+    if (path.extname(options.input) != ".txt") {
+        console.log(chalk.red.bold("Please select a text file."));
+        return;
+    }
+    // Create HTML for single txt file
+    var data = fs.readFileSync(options.input, "utf-8");
+    HTMLcreate(options.input.split("\\").slice(-1)[0].split(".")[0], data);
+    indexCreate(dir);
 }
 
 // HTML file creation
