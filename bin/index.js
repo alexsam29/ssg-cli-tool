@@ -50,14 +50,12 @@ if (options.output) {
     return;
 }
 
-// Delete directory if it already exists and recreate it. Else create new directory
+// Delete directory if it already exists, then create directory
 if (fs.existsSync(dir)) {
     fs.rmSync(dir, { recursive: true, force: true });
-    fs.mkdirSync(dir);
-} else if (!fs.existsSync(dir)) {
-    console.log(chalk.blue(`New directory created: ${dir}`));
-    fs.mkdirSync(dir);
 }
+fs.mkdirSync(dir);
+console.log(chalk.blue(`New directory created: ${dir}`));
 
 // Read file and generate HTML
 fs.readFile(options.input, (err, data) => {
