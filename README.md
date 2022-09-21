@@ -9,7 +9,7 @@
  ## Instructions
  1.  Clone or download the repository on to your local machine.  Remember the file location!
  2.  Open a terminal or command window and move to the directory where the repository was downloaded to.
- 3.  Before running the tool, run the command ```npm install -g``` to install npm packages.
+ 3.  Before running the tool, run the command ```npm install``` followed by ```npm install -g``` to install npm packages and install the tool globally.
  4.  Run the SSG tool by inputting a file or folder path.  
  ```
  ssg -i file_path
