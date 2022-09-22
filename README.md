@@ -29,7 +29,7 @@
  |-o, --output| Specify a different output directory (any existing contents in the directory will be <b>DELETED</b>)| [string]|
  
  ## Examples
- ### Generate HTML file based off a text file
+ ### Generate HTML file based off a text or markdown file
  ```
  ssg -i file_path
  ```
@@ -37,7 +37,10 @@
  ```
  ssg -i ".\testFiles\Silver Blaze.txt"
  ```
- ### Generate HTML files based off of text files within a directory
+ ```
+ ssg -i ".\testFiles\input MD.md"
+ ```
+ ### Generate HTML files based off of text or markdown files within a directory
  ```
  ssg -i .\testFiles
  ```
