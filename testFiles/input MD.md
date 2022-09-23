@@ -44,21 +44,21 @@ of fresh papers which he had procured at Paddington. We had left
 Reading far behind us before he thrust the last one of them under
 the seat, and offered me his cigar-case.
 
-“We are going well,” said he, looking out the window and glancing
+(test case 1)_“We<5>_ are _go!@#$%^&()+;/ing well_,” said he, looking out the window and glancing
 at his watch. “Our rate at present is fifty-three and a half
 miles an hour.”
 
-“I have not observed the quarter-mile posts,” said I.
+(test case 2)“_4564566_ I have not observed _the quarter-mile posts,” said I._
 
-“Nor have I. But the telegraph posts upon this line are sixty
+(test case 3)“_Nor have I._ But the telegraph posts upon this line are sixty
 yards apart, and the calculation is a simple one. I presume that
 you have looked into this matter of the murder of John Straker
-and the disappearance of Silver Blaze?”
+and the disappearance of _Silver Blaze?_”
 
-“I have seen what the _Telegraph_ and the _Chronicle_ have to
+(test case 4)“I have seen what the _Telegraph_ and the _Chronicle_ have to
 say.”
 
-“It is one of those cases where the art of the reasoner should be
+(test case 5)_“It is one of those cases where the art of the reasoner should be
 used rather for the sifting of details than for the acquiring of
 fresh evidence. The tragedy has been so uncommon, so complete and
 of such personal importance to so many people, that we are
@@ -70,7 +70,7 @@ basis, it is our duty to see what inferences may be drawn and
 what are the special points upon which the whole mystery turns.
 On Tuesday evening I received telegrams from both Colonel Ross,
 the owner of the horse, and from Inspector Gregory, who is
-looking after the case, inviting my co-operation.”
+looking after the case, inviting my co-operation.”_
 
 “Tuesday evening!” I exclaimed. “And this is Thursday morning.
 Why didn’t you go down yesterday?”

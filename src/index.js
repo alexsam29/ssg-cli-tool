@@ -109,7 +109,7 @@ module.exports.main = function main() {
     // HTML file creation
     function HTMLcreate(filename, content) {
         var title = filename;
-        var body = content.split("\n\r");
+        var body = content.split("\n\n");
         var newBody = "<h1>" + title + "</h1>";
         
 
@@ -118,12 +118,12 @@ module.exports.main = function main() {
             
             // If it's .md file, check each line; while any *text* and _text_ exist, repalce them with <i></i>
             if (isMd==true) {        
-                while (line.match(/_[\s\w]+_/)) {
+                while (line.match(/_[—!@#$%^&()+;/<>.\s\w\d,?"“”-]+_/)) {
                     line=line.replace("_","<i>");
                     line=line.replace("_","</i>");
                 }
                 
-                while (line.match(/\*[\s\w]+\*/)) {
+                while (line.match(/\*[—!@#$%^&()+;/<>.\s\w\d,?"“”-]+\*/)) {
                     line=line.replace("*","<i>");
                     line=line.replace("*","</i>");
                 } 
