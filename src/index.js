@@ -109,7 +109,7 @@ module.exports.main = function main() {
     // HTML file creation
     function HTMLcreate(filename, content) {
         var title = filename;
-        var body = content.split("\n\n");
+        var body = content.split("\n\r");
         var newBody = "<h1>" + title + "</h1>";
         
 
