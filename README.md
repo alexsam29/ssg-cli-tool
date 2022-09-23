@@ -2,7 +2,7 @@
  A command-line interface Static Site Generator (SSG) used for generating a complete HTML web site from raw data and files.
  
  ## Overview
- This tool allows a user to input a text file path or a directory path and an HTML file will be created for the specified file or for every text file in the specified directory.
+ This tool allows a user to input a text or markdown file path or a directory path and an HTML file will be created for the specified file or for every text/markdown file in the specified directory.
  ## Requirements
  A recent version of [Node.js](https://nodejs.org/en/) must be downloaded and installed.
  
@@ -14,7 +14,7 @@
  ```
  ssg -i file_path
  ```
- 5. If a file was specified, an HTML file will be created and added into the ```dist``` directory.  If a directory was specified, HTML files will be created for every text file in the directory and they will be added into the ```dist``` directory.
+ 5. If a file was specified, an HTML file will be created and added into the ```dist``` directory.  If a directory was specified, HTML files will be created for every text/markdown file in the directory and they will be added into the ```dist``` directory.
  6. [OPTIONAL] Specify a directory to output the HTML files to by adding the path as a second argument.  If the directory does not exist, a new one will be created.  If it does exist, the current contents will be deleted and only the HTML files will be added.
  ```
  ssg -i file_path -o directoryPath
@@ -29,7 +29,7 @@
  |-o, --output| Specify a different output directory (any existing contents in the directory will be <b>DELETED</b>)| [string]|
  
  ## Examples
- ### Generate HTML file based off a text file
+ ### Generate HTML file based off a text or markdown file
  ```
  ssg -i file_path
  ```
@@ -37,7 +37,10 @@
  ```
  ssg -i ".\testFiles\Silver Blaze.txt"
  ```
- ### Generate HTML files based off of text files within a directory
+ ```
+ ssg -i ".\testFiles\input MD.md"
+ ```
+ ### Generate HTML files based off of text or markdown files within a directory
  ```
  ssg -i .\testFiles
  ```
@@ -57,6 +60,7 @@
  ssg -i .\testFiles -o .\anotherFolder
  ```
 ## Optional Features Implemented
-- Title parsed from text files. It will populate the ```<title>``` tag and add a ```<h1>``` tag to the top of the body.
+- Title parsed from text and markdown files. It will populate the ```<title>``` tag and add a ```<h1>``` tag to the top of the body.
 - Allow the user to specify a different output directory using --output or -o. If not specified, dist will be used, but if the user specifies a different output path, it will use that.  If the directory does not exist, a new directory will be created.
 - If the user specifies a folder for the input, it will automatically generate an index.html file, which has relative links to each of the generated HTML files.
+- Italicized text parsed from markdown files. It will add a ```<i>``` tag to any italicized text.

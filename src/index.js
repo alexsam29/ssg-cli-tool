@@ -33,6 +33,7 @@ module.exports.main = function main() {
     var inputPath = `Path of file or folder: ${options.input}`;
     var isDirectory = false;
     var isFile = false;
+    var isMd = false;
 
     // Determine if input is a valid file or directory
     try {
@@ -77,7 +78,12 @@ module.exports.main = function main() {
             var filePath = options.input + "\\" + filename;
             if (fs.lstatSync(filePath).isFile()) {
                 var content = fs.readFileSync(filePath, "utf-8");
-                if (path.extname(filename) == ".txt") {
+                if (path.extname(filename) == ".txt" || path.extname(filename) == ".md" ) { // Check if file extension is txt or md
+                    if (path.extname(filename) == ".md") { // Check and flag for .md files
+                        isMd=true;
+                    }else{
+                        isMd=false;
+                    }
                     HTMLcreate(filename.split(".")[0], content);
                 }
             }
@@ -85,10 +91,15 @@ module.exports.main = function main() {
         indexCreate(dir);
     } else if (isFile) {
         // If input file is not a txt file, output error msg
-        if (path.extname(options.input) != ".txt") {
-            console.log(chalk.red.bold("Please select a text file."));
+        if (path.extname(options.input) != ".txt" && path.extname(options.input) != ".md") { //Check if file extension is .txt or .md
+            console.log(chalk.red.bold("Please select a text or markdown file."));
             return;
         }
+
+        if (path.extname(options.input) == ".md"){ // Check and flag for .md files
+            isMd=true;
+        }
+
         // Create HTML for single txt file
         var data = fs.readFileSync(options.input, "utf-8");
         HTMLcreate(options.input.split("\\").slice(-1)[0].split(".")[0], data);
@@ -100,9 +111,24 @@ module.exports.main = function main() {
         var title = filename;
         var body = content.split("\n\r");
         var newBody = "<h1>" + title + "</h1>";
+        
 
         // Append rest of the body after the title
-        body.forEach(function (line, index) {
+        body.forEach(function (line, index) {      
+            
+            // If it's .md file, check each line; while any *text* and _text_ exist, repalce them with <i></i>
+            if (isMd==true) {        
+                while (line.match(/_[—!@#$%^&()+;/<>.\s\w\d,?"“”-]+_/)) {
+                    line=line.replace("_","<i>");
+                    line=line.replace("_","</i>");
+                }
+                
+                while (line.match(/\*[—!@#$%^&()+;/<>.\s\w\d,?"“”-]+\*/)) {
+                    line=line.replace("*","<i>");
+                    line=line.replace("*","</i>");
+                } 
+            }
+
             if (index != 0) {
                 newBody += "<p>" + line + "</p>";
             }
@@ -112,7 +138,7 @@ module.exports.main = function main() {
             title: title,
             body: newBody,
         });
-
+        
         // Write to HTML file
         fs.writeFileSync(`${dir + "\\" + title}.html`, html);
         console.log(
