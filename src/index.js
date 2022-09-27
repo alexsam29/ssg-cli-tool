@@ -97,8 +97,7 @@ module.exports.main = function main() {
     if (isDirectory) {
         var filenames = fs.readdirSync(options.input);
         filenames.forEach(function (filename) {
-            var filePath = filePath.join(__dirname, options.input + filename);
-            console.log(filePath);
+            var filePath = path.join(options.input, filename);
             if (fs.lstatSync(filePath).isFile()) {
                 var content = fs.readFileSync(filePath, "utf-8");
                 if (
