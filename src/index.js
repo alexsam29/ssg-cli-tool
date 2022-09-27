@@ -157,6 +157,7 @@ module.exports.main = function main() {
             content = processMD(content, "_", "<i>", "</i>");
             content = processMD(content, "**", "<strong>", "</strong>");
             content = processMD(content, "*", "<i>", "</i>");
+            content = processMD(content, "`", "<code>", "</code>");
         }
         var body = content.split(/\r?\n\r?\n/);
         var newBody = "<h1>" + title + "</h1>";
@@ -164,7 +165,7 @@ module.exports.main = function main() {
         // Append rest of the body after the title
         body.forEach(function (line, index) {
             if (index !== 0) {
-                newBody += "<p>" + line + "</p>";
+                newBody += "\n<p>" + line + "</p>\n";
             }
         });
 
@@ -190,8 +191,8 @@ module.exports.main = function main() {
 
         // Add links to HTML body
         filenames.forEach(function (filename) {
-            body += `<li><a href="${dir}\\${filename}">${filename.split(".")[0]
-                }</a></li>`;
+            body += `\n<li><a href="${dir}\\${filename}">${filename.split(".")[0]
+                }</a></li>\n`;
         });
         body += "</ul>";
 

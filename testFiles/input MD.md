@@ -71,10 +71,10 @@ On Tuesday evening I received telegrams from both Colonel Ross,
 the owner of the horse, and from Inspector Gregory, who is
 looking after the case, inviting my co-operation.”_
 
-“Tuesday evening!” I exclaimed. “And this is Thursday morning.
+(test case 6)“Tuesday evening!” `I exclaimed`. “And this is Thursday morning.
 Why didn’t you go down yesterday?”
 
-“Because I made a blunder, my dear Watson—which is, I am afraid,
+(test case 7)`“Because I made a blunder, my dear Watson—which is, I am afraid,
 a more common occurrence than any one would think who only knew
 me through your memoirs. The fact is that I could not believe it
 possible that the most remarkable horse in England could long
@@ -85,7 +85,7 @@ murderer of John Straker. When, however, another morning had
 come, and I found that beyond the arrest of young Fitzroy Simpson
 nothing had been done, I felt that it was time for me to take
 action. Yet in some ways I feel that yesterday has not been
-wasted.”
+wasted.”`
 
 “You have formed a theory, then?”
 

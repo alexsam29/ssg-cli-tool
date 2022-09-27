@@ -104,3 +104,4 @@ ssg --input testFiles --lang en-GB
 -   Italicized text parsed from markdown files. It will add a `<i>` tag to any italicized text.
 -   Bold text parsed from markdown files. It will add a `<strong>` tag to any bold text.
 -   Language code added to generated HTML files using input from the `-l`/`--lang` argument.
+-   Inline code blocks parsed from markdown files. It will add a `<code>` tag to any inline code block.
