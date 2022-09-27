@@ -45,6 +45,10 @@ module.exports.main = function main() {
             alias: "output",
             describe: "Specify a different output directory",
             type: "string",
+        }).option("l", {
+            alias: "lang",
+            describe: "HTML language code for resulting HTML file(s)",
+            type: "string",
         }).argv;
 
     var dir;
