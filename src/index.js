@@ -32,9 +32,7 @@ module.exports.main = function main() {
         .help("help")
         .alias("help", "h")
         .version(
-            chalk.bold(
-                `\nName: ${name}\nVersion: ${version}\nAuthor: ${author}\n`
-            )
+            chalk.bold(`\nName: ${name}\nVersion: ${version}\nAuthor: ${author}\n`)
         )
         .alias("version", "v")
         .option("i", {
@@ -51,7 +49,6 @@ module.exports.main = function main() {
 
     var dir;
     var inputPath = `Path of file or folder: ${options.input}`;
-    console.log(options.input);
     var isDirectory = false;
     var isFile = false;
     var isMd = false;
@@ -123,9 +120,7 @@ module.exports.main = function main() {
             path.extname(options.input) != ".md"
         ) {
             //Check if file extension is .txt or .md
-            console.log(
-                chalk.red.bold("Please select a text or markdown file.")
-            );
+            console.log(chalk.red.bold("Please select a text or markdown file."));
             return;
         }
 
@@ -166,8 +161,6 @@ module.exports.main = function main() {
         });
 
         // Write to HTML file
-        //console.log(`ERROR: ${path.basename(dir) + "/" + title}.html`);
-        console.log(path.basename(title));
         fs.writeFileSync(`${dir + "/" + path.basename(title)}.html`, html);
         console.log(
             chalk.green.bold(
@@ -183,9 +176,8 @@ module.exports.main = function main() {
 
         // Add links to HTML body
         filenames.forEach(function (filename) {
-            body += `<li><a href="${dir}\\${filename}">${
-                filename.split(".")[0]
-            }</a></li>`;
+            body += `<li><a href="${dir}\\${filename}">${filename.split(".")[0]
+                }</a></li>`;
         });
         body += "</ul>";
 
@@ -197,7 +189,7 @@ module.exports.main = function main() {
         // Write to HTML file
         fs.writeFileSync(`index.html`, html);
         console.log(
-            chalk.green.bold("HTML file created --> Path: " + `.\\index.html`)
+            chalk.green.bold("HTML file created --> Path: " + `${dir}\\index.html`)
         );
     }
 };
