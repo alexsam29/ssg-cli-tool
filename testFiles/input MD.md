@@ -1,6 +1,5 @@
 Silver Blaze
 
-
 I am afraid, Watson, that I shall have to go,” said Holmes, as we
 sat down together to our breakfast one morning.
 
@@ -8,7 +7,7 @@ sat down together to our breakfast one morning.
 
 “To Dartmoor; to King’s Pyland.”
 
-I was not surprised. Indeed, my only wonder was that he had not
+**I was not surprised. Indeed, my only wonder was that he had not
 already been mixed up in this extraordinary case, which was the
 one topic of conversation through the length and breadth of
 England. For a whole day my companion had rambled about the room
@@ -23,18 +22,18 @@ challenge his powers of analysis, and that was the singular
 disappearance of the favourite for the Wessex Cup, and the tragic
 murder of its trainer. When, therefore, he suddenly announced his
 intention of setting out for the scene of the drama it was only
-what I had both expected and hoped for.
+what I had both expected and hoped for.**
 
 “I should be most happy to go down with you if I should not be in
 the way,” said I.
 
-“My dear Watson, you would confer a great favour upon me by
+**“My dear Watson, you would confer a great favour upon me by
 coming. And I think that your time will not be misspent, for
 there are points about the case which promise to make it an
 absolutely unique one. We have, I think, just time to catch our
 train at Paddington, and I will go further into the matter upon
 our journey. You would oblige me by bringing with you your very
-excellent field-glass.”
+excellent field-glass.”**
 
 And so it happened that an hour or so later I found myself in the
 corner of a first-class carriage flying along en route for
@@ -924,6 +923,7 @@ glanced at the card to see the entries. It ran:—
 Wessex Plate. 50 sovs each h ft with 1000 sovs added for four and
 five year olds. Second, £300. Third, £200. New course (one mile
 and five furlongs).
+
 1. Mr. Heath Newton’s The Negro (red cap, cinnamon jacket).
 2. Colonel Wardlaw’s Pugilist (pink cap, blue and black jacket).
 3. Lord Backwater’s Desborough (yellow cap and sleeves).
