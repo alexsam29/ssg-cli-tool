@@ -171,14 +171,15 @@ module.exports.main = function main() {
         var html = createHTML({
             title: title,
             body: newBody,
-            lang: lang
+            lang: lang,
         });
 
         // Write to HTML file
         fs.writeFileSync(`${dir + "/" + path.basename(title)}.html`, html);
         console.log(
             chalk.green.bold(
-                "HTML file created --> Path: " + `${path.basename(dir) + "\\" + title}.html`
+                "HTML file created --> Path: " +
+                `${path.basename(dir) + "\\" + title}.html`
             )
         );
     }
@@ -198,13 +199,15 @@ module.exports.main = function main() {
         var html = createHTML({
             title: "index",
             body: body,
-            lang: lang
+            lang: lang,
         });
 
         // Write to HTML file
         fs.writeFileSync(`index.html`, html);
         console.log(
-            chalk.green.bold("HTML file created --> Path: " + `${path.basename(dir)}\\index.html`)
+            chalk.green.bold(
+                "HTML file created --> Path: " + `${path.basename(dir)}\\index.html`
+            )
         );
     }
 };
