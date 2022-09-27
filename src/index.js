@@ -152,7 +152,7 @@ module.exports.main = function main() {
         // Append rest of the body after the title
         body.forEach(function (line, index) {
             if (index !== 0) {
-                newBody += "<p>" + line + "</p>";
+                newBody += "\n<p>" + line + "</p>\n";
             }
         });
 
@@ -177,8 +177,8 @@ module.exports.main = function main() {
 
         // Add links to HTML body
         filenames.forEach(function (filename) {
-            body += `<li><a href="${dir}\\${filename}">${filename.split(".")[0]
-                }</a></li>`;
+            body += `\n<li><a href="${dir}\\${filename}">${filename.split(".")[0]
+                }</a></li>\n`;
         });
         body += "</ul>";
 
