@@ -183,7 +183,7 @@ module.exports.main = function main() {
 
         // Add links to HTML body
         filenames.forEach(function (filename) {
-            body += `<li><a href="${dir}\\${filename}">${
+            body += `<li><a href=".\\${path.basename(dir)}\\${filename}">${
                 filename.split(".")[0]
             }</a></li>`;
         });
