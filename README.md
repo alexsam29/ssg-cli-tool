@@ -27,8 +27,14 @@ ssg -i file_path
 ```
 ssg -i file_path -o directoryPath
 ```
-
 NOTE: This will <b>DELETE the specified directory</b> and create a new one with the same name. <b>DO NOT SPECIFY A DIRECTORY WITH IMPORTANT FILES</b>.
+
+7. [OPTIONAL] Indicate the language to use when generating the lang attribute on the root <html> element in the resulting HTML file(s). Default language is `en-CA`.
+```
+ssg -i testFiles -o randomFolder -l fr
+```
+
+Language codes must be ISO 639-1 standard language codes. Which can be found [here](https://www.andiamo.co.uk/resources/iso-language-codes/).
 
 ### List of Options
 
@@ -38,6 +44,7 @@ NOTE: This will <b>DELETE the specified directory</b> and create a new one with 
 | -v, --version | Show version number                                                                                  | [boolean]           |
 | -i, --input   | File or folder to generate HTML files from                                                           | [string] [required] |
 | -o, --output  | Specify a different output directory (any existing contents in the directory will be <b>DELETED</b>) | [string]            |
+| -l, --lang | HTML language code for resulting HTML file(s) | [string] |
 
 ## Examples
 
@@ -73,16 +80,20 @@ ssg -i ".\test Files"
 
 Any existing contents in the directory will be <b>DELETED</b>.
 
-For a File:
+#### For a File:
 
 ```
 ssg -i ".\testFiles\Silver Blaze.txt" -o .\anotherFolder
 ```
 
-For a directory:
+#### For a directory:
 
 ```
 ssg -i .\testFiles -o .\anotherFolder
+```
+### Specify a HTML `lang` attribute for resulting HTML files
+```
+ssg --input testFiles --lang en-GB
 ```
 
 ## Optional Features Implemented
@@ -92,3 +103,4 @@ ssg -i .\testFiles -o .\anotherFolder
 -   If the user specifies a folder for the input, it will automatically generate an index.html file, which has relative links to each of the generated HTML files.
 -   Italicized text parsed from markdown files. It will add a `<i>` tag to any italicized text.
 -   Bold text parsed from markdown files. It will add a `<strong>` tag to any bold text.
+-   Language code added to generated HTML files using input from the `-l`/`--lang` argument.
