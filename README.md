@@ -92,3 +92,4 @@ ssg -i .\testFiles -o .\anotherFolder
 -   If the user specifies a folder for the input, it will automatically generate an index.html file, which has relative links to each of the generated HTML files.
 -   Italicized text parsed from markdown files. It will add a `<i>` tag to any italicized text.
 -   Bold text parsed from markdown files. It will add a `<strong>` tag to any bold text.
+-   Inline code blocks parsed from markdown files. It will add a `<code>` tag to any inline code block.
