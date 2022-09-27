@@ -32,9 +32,7 @@ module.exports.main = function main() {
         .help("help")
         .alias("help", "h")
         .version(
-            chalk.bold(
-                `\nName: ${name}\nVersion: ${version}\nAuthor: ${author}\n`
-            )
+            chalk.bold(`\nName: ${name}\nVersion: ${version}\nAuthor: ${author}\n`)
         )
         .alias("version", "v")
         .option("i", {
@@ -47,11 +45,16 @@ module.exports.main = function main() {
             alias: "output",
             describe: "Specify a different output directory",
             type: "string",
+        })
+        .option("l", {
+            alias: "lang",
+            describe: "HTML language code for resulting HTML file(s)",
+            type: "string",
         }).argv;
 
     var dir;
-    var inputPath = `Path of file or folder: ${options.input}`;
-    console.log(options.input);
+    var inputPath = `\nPath of file or folder selected: ${options.input}`;
+    var lang;
     var isDirectory = false;
     var isFile = false;
     var isMd = false;
@@ -76,14 +79,20 @@ module.exports.main = function main() {
         // Output file/directory path
         console.log(chalk.bgWhite(inputPath));
         dir = path.join(__dirname, "../dist");
-        console.log(dir);
     } else {
         console.log(
             chalk.red.bold(
-                "\nError. A filename or folder is require for option -i/--input.\n\nEx: ssg -i file_path\n"
+                "Error. A filename or folder is require for option -i/--input.\n\nEx: ssg -i file_path\n"
             )
         );
         return;
+    }
+
+    // Get HTML language code from -l/--lang argument.  Default to en-CA.
+    if (options.lang) {
+        lang = options.lang;
+    } else {
+        lang = "en-CA";
     }
 
     // Delete directory if it already exists, then create directory
@@ -91,7 +100,7 @@ module.exports.main = function main() {
         fs.rmSync(dir, { recursive: true, force: true });
     }
     fs.mkdirSync(dir);
-    console.log(chalk.blue(`New directory created: ${dir}`));
+    console.log(chalk.blue(`\nNew directory created: ${dir}\n`));
 
     // Read directory or file path and generate HTML
     if (isDirectory) {
@@ -123,9 +132,7 @@ module.exports.main = function main() {
             path.extname(options.input) != ".md"
         ) {
             //Check if file extension is .txt or .md
-            console.log(
-                chalk.red.bold("Please select a text or markdown file.")
-            );
+            console.log(chalk.red.bold("Please select a text or markdown file."));
             return;
         }
 
@@ -149,6 +156,7 @@ module.exports.main = function main() {
             content = processMD(content, "_", "<i>", "</i>");
             content = processMD(content, "**", "<strong>", "</strong>");
             content = processMD(content, "*", "<i>", "</i>");
+            content = processMD(content, "`", "<code>", "</code>");
         }
         var body = content.split(/\r?\n\r?\n/);
         var newBody = "<h1>" + title + "</h1>";
@@ -156,22 +164,22 @@ module.exports.main = function main() {
         // Append rest of the body after the title
         body.forEach(function (line, index) {
             if (index !== 0) {
-                newBody += "<p>" + line + "</p>";
+                newBody += "\n<p>" + line + "</p>\n";
             }
         });
 
         var html = createHTML({
             title: title,
             body: newBody,
+            lang: lang,
         });
 
         // Write to HTML file
-        //console.log(`ERROR: ${path.basename(dir) + "/" + title}.html`);
-        console.log(path.basename(title));
         fs.writeFileSync(`${dir + "/" + path.basename(title)}.html`, html);
         console.log(
             chalk.green.bold(
-                "HTML file created --> Path: " + `${dir + "\\" + title}.html`
+                "HTML file created --> Path: " +
+                `${path.basename(dir) + "\\" + title}.html`
             )
         );
     }
@@ -183,21 +191,23 @@ module.exports.main = function main() {
 
         // Add links to HTML body
         filenames.forEach(function (filename) {
-            body += `<li><a href=".\\${path.basename(dir)}\\${filename}">${
-                filename.split(".")[0]
-            }</a></li>`;
+            body += `\n<li><a href=".\\${path.basename(dir)}\\${filename}">${filename.split(".")[0]
+                }</a></li>\n`;
         });
         body += "</ul>";
 
         var html = createHTML({
             title: "index",
             body: body,
+            lang: lang,
         });
 
         // Write to HTML file
         fs.writeFileSync(`index.html`, html);
         console.log(
-            chalk.green.bold("HTML file created --> Path: " + `.\\index.html`)
+            chalk.green.bold(
+                "HTML file created --> Path: " + `${path.basename(dir)}\\index.html`
+            )
         );
     }
 };
