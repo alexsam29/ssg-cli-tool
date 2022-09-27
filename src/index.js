@@ -150,7 +150,7 @@ module.exports.main = function main() {
             content = processMD(content, "**", "<strong>", "</strong>");
             content = processMD(content, "*", "<i>", "</i>");
         }
-        var body = content.split(/\r?\n/);
+        var body = content.split(/\r?\n\r?\n/);
         var newBody = "<h1>" + title + "</h1>";
 
         // Append rest of the body after the title
