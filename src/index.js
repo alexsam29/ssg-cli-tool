@@ -144,6 +144,7 @@ module.exports.main = function main() {
             content = processMD(content, "_", "<i>", "</i>");
             content = processMD(content, "**", "<strong>", "</strong>");
             content = processMD(content, "*", "<i>", "</i>");
+            content = processMD(content, "`", "<code>", "</code>");
         }
         var body = content.split(/\r?\n\r?\n/);
         var newBody = "<h1>" + title + "</h1>";
