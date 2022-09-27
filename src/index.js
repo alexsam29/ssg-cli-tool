@@ -45,7 +45,8 @@ module.exports.main = function main() {
             alias: "output",
             describe: "Specify a different output directory",
             type: "string",
-        }).option("l", {
+        })
+        .option("l", {
             alias: "lang",
             describe: "HTML language code for resulting HTML file(s)",
             type: "string",
@@ -53,6 +54,7 @@ module.exports.main = function main() {
 
     var dir;
     var inputPath = `Path of file or folder: ${options.input}`;
+    var lang;
     var isDirectory = false;
     var isFile = false;
     var isMd = false;
@@ -85,6 +87,13 @@ module.exports.main = function main() {
             )
         );
         return;
+    }
+
+    // Get HTML language code from -l/--lang argument.  Default to en-CA.
+    if (options.lang) {
+        lang = options.lang;
+    } else {
+        lang = "en-CA";
     }
 
     // Delete directory if it already exists, then create directory
@@ -162,6 +171,7 @@ module.exports.main = function main() {
         var html = createHTML({
             title: title,
             body: newBody,
+            lang: lang
         });
 
         // Write to HTML file
@@ -188,6 +198,7 @@ module.exports.main = function main() {
         var html = createHTML({
             title: "index",
             body: body,
+            lang: lang
         });
 
         // Write to HTML file
