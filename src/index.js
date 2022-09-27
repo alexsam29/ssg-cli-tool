@@ -7,6 +7,24 @@ const { version } = require("../package.json");
 const { name } = require("../package.json");
 const { author } = require("../package.json");
 
+function processMD(mdText, pattern, openTag, closeTag) {
+    let result = "";
+    let closed = true;
+
+    const arr = mdText.split(pattern);
+
+    arr.forEach((element, ind) => {
+        result += element;
+        if (ind < arr.length - 1) {
+            result += ind % 2 === 0 ? openTag : closeTag;
+            closed = !closed;
+        }
+    });
+    result += !closed ? closeTag : "";
+
+    return result;
+}
+
 module.exports.main = function main() {
     // Create CLI arguments
     const options = yargs
@@ -14,7 +32,9 @@ module.exports.main = function main() {
         .help("help")
         .alias("help", "h")
         .version(
-            chalk.bold(`\nName: ${name}\nVersion: ${version}\nAuthor: ${author}\n`)
+            chalk.bold(
+                `\nName: ${name}\nVersion: ${version}\nAuthor: ${author}\n`
+            )
         )
         .alias("version", "v")
         .option("i", {
@@ -31,8 +51,10 @@ module.exports.main = function main() {
 
     var dir;
     var inputPath = `Path of file or folder: ${options.input}`;
+    console.log(options.input);
     var isDirectory = false;
     var isFile = false;
+    var isMd = false;
 
     // Determine if input is a valid file or directory
     try {
@@ -53,7 +75,8 @@ module.exports.main = function main() {
     } else if (options.input) {
         // Output file/directory path
         console.log(chalk.bgWhite(inputPath));
-        dir = ".\\dist";
+        dir = path.join(__dirname, "../dist");
+        console.log(dir);
     } else {
         console.log(
             chalk.red.bold(
@@ -74,10 +97,20 @@ module.exports.main = function main() {
     if (isDirectory) {
         var filenames = fs.readdirSync(options.input);
         filenames.forEach(function (filename) {
-            var filePath = options.input + "\\" + filename;
+            var filePath = path.join(options.input, filename);
             if (fs.lstatSync(filePath).isFile()) {
                 var content = fs.readFileSync(filePath, "utf-8");
-                if (path.extname(filename) == ".txt") {
+                if (
+                    path.extname(filename) == ".txt" ||
+                    path.extname(filename) == ".md"
+                ) {
+                    // Check if file extension is txt or md
+                    if (path.extname(filename) == ".md") {
+                        // Check and flag for .md files
+                        isMd = true;
+                    } else {
+                        isMd = false;
+                    }
                     HTMLcreate(filename.split(".")[0], content);
                 }
             }
@@ -85,10 +118,22 @@ module.exports.main = function main() {
         indexCreate(dir);
     } else if (isFile) {
         // If input file is not a txt file, output error msg
-        if (path.extname(options.input) != ".txt") {
-            console.log(chalk.red.bold("Please select a text file."));
+        if (
+            path.extname(options.input) != ".txt" &&
+            path.extname(options.input) != ".md"
+        ) {
+            //Check if file extension is .txt or .md
+            console.log(
+                chalk.red.bold("Please select a text or markdown file.")
+            );
             return;
         }
+
+        if (path.extname(options.input) == ".md") {
+            // Check and flag for .md files
+            isMd = true;
+        }
+
         // Create HTML for single txt file
         var data = fs.readFileSync(options.input, "utf-8");
         HTMLcreate(options.input.split("\\").slice(-1)[0].split(".")[0], data);
@@ -98,12 +143,19 @@ module.exports.main = function main() {
     // HTML file creation
     function HTMLcreate(filename, content) {
         var title = filename;
-        var body = content.split("\n\r");
+        // if markdown process markdown special characters
+        if (isMd == true) {
+            content = processMD(content, "__", "<strong>", "</strong>");
+            content = processMD(content, "_", "<i>", "</i>");
+            content = processMD(content, "**", "<strong>", "</strong>");
+            content = processMD(content, "*", "<i>", "</i>");
+        }
+        var body = content.split(/\r?\n\r?\n/);
         var newBody = "<h1>" + title + "</h1>";
 
         // Append rest of the body after the title
         body.forEach(function (line, index) {
-            if (index != 0) {
+            if (index !== 0) {
                 newBody += "<p>" + line + "</p>";
             }
         });
@@ -114,7 +166,9 @@ module.exports.main = function main() {
         });
 
         // Write to HTML file
-        fs.writeFileSync(`${dir + "\\" + title}.html`, html);
+        //console.log(`ERROR: ${path.basename(dir) + "/" + title}.html`);
+        console.log(path.basename(title));
+        fs.writeFileSync(`${dir + "/" + path.basename(title)}.html`, html);
         console.log(
             chalk.green.bold(
                 "HTML file created --> Path: " + `${dir + "\\" + title}.html`
@@ -129,8 +183,9 @@ module.exports.main = function main() {
 
         // Add links to HTML body
         filenames.forEach(function (filename) {
-            body += `<li><a href="${dir}\\${filename}">${filename.split(".")[0]
-                }</a></li>`;
+            body += `<li><a href="${dir}\\${filename}">${
+                filename.split(".")[0]
+            }</a></li>`;
         });
         body += "</ul>";
 
