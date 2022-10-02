@@ -39,7 +39,6 @@ module.exports.main = function main() {
             alias: "input",
             describe: "File name",
             type: "string",
-            demandOption: true,
         })
         .option("o", {
             alias: "output",
@@ -50,6 +49,11 @@ module.exports.main = function main() {
             alias: "lang",
             describe: "HTML language code for resulting HTML file(s)",
             type: "string",
+        })
+        .option("c", {
+            alias: "config",
+            describe: "Specify a JSON config file to use",
+            type: "string",
         }).argv;
 
     var dir;
@@ -59,41 +63,49 @@ module.exports.main = function main() {
     var isFile = false;
     var isMd = false;
 
-    // Determine if input is a valid file or directory
-    try {
-        isDirectory = fs.lstatSync(options.input).isDirectory();
-        isFile = fs.lstatSync(options.input).isFile();
-    } catch (error) {
-        console.log(
-            chalk.red.bold("\nPlease enter a valid file/directory path.\n")
-        );
-        return;
+    if (options.config)
+    {
+
+    }
+    else
+    {
+        // Determine if input is a valid file or directory
+        try {
+            isDirectory = fs.lstatSync(options.input).isDirectory();
+            isFile = fs.lstatSync(options.input).isFile();
+        } catch (error) {
+            console.log(
+                chalk.red.bold("\nPlease enter a valid file/directory path.\n")
+            );
+            return;
+        }
+
+        // Create directory.  If no input argument, then output error msg and exit
+        if (options.output) {
+            // Output file/directory path
+            console.log(chalk.bgWhite(inputPath));
+            dir = options.output;
+        } else if (options.input) {
+            // Output file/directory path
+            console.log(chalk.bgWhite(inputPath));
+            dir = path.join(__dirname, "../dist");
+        } else {
+            console.log(
+                chalk.red.bold(
+                    "Error. A filename or folder is require for option -i/--input.\n\nEx: ssg -i file_path\n"
+                )
+            );
+            return;
+        }
+
+        // Get HTML language code from -l/--lang argument.  Default to en-CA.
+        if (options.lang) {
+            lang = options.lang;
+        } else {
+            lang = "en-CA";
+        }
     }
 
-    // Create directory.  If no input argument, then output error msg and exit
-    if (options.output) {
-        // Output file/directory path
-        console.log(chalk.bgWhite(inputPath));
-        dir = options.output;
-    } else if (options.input) {
-        // Output file/directory path
-        console.log(chalk.bgWhite(inputPath));
-        dir = path.join(__dirname, "../dist");
-    } else {
-        console.log(
-            chalk.red.bold(
-                "Error. A filename or folder is require for option -i/--input.\n\nEx: ssg -i file_path\n"
-            )
-        );
-        return;
-    }
-
-    // Get HTML language code from -l/--lang argument.  Default to en-CA.
-    if (options.lang) {
-        lang = options.lang;
-    } else {
-        lang = "en-CA";
-    }
 
     // Delete directory if it already exists, then create directory
     if (fs.existsSync(dir)) {
@@ -145,6 +157,12 @@ module.exports.main = function main() {
         var data = fs.readFileSync(options.input, "utf-8");
         HTMLcreate(options.input.split("\\").slice(-1)[0].split(".")[0], data);
         indexCreate(dir);
+    }
+
+    //Parse JSON config file
+    function parseConfig()
+    {
+
     }
 
     // HTML file creation
