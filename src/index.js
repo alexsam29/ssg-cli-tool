@@ -62,10 +62,19 @@ module.exports.main = function main() {
     var isDirectory = false;
     var isFile = false;
     var isMd = false;
+    var configOptions = [];
+
+    if (!(options.input || options.config))
+    {
+        console.log(
+            chalk.red.bold("\nPlease enter a valid input/config file.\n")
+        );
+        return;
+    }
 
     if (options.config)
     {
-
+        parseConfig(options.config);
     }
     else
     {
@@ -160,9 +169,12 @@ module.exports.main = function main() {
     }
 
     //Parse JSON config file
-    function parseConfig()
+    function parseConfig(configFile)
     {
-
+        console.log(configFile);
+        var configs = fs.readFileSync(configFile, "utf-8");
+        var JSONconfigs = JSON.parse(configs);
+        console.log(JSONconfigs);
     }
 
     // HTML file creation
