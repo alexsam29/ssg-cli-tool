@@ -81,7 +81,7 @@ module.exports.main = function main() {
     }
 
     //if config file is provided and valid, overwrite all option inputs
-    if (options.config) {
+    if (options.config && fs.existsSync(options.config)) {
         if (path.extname(options.config) == ".json") {
             configOptions = parseConfig(options.config);
             inputName = configOptions.input;
@@ -98,6 +98,12 @@ module.exports.main = function main() {
                 chalk.red.bold("\nPlease enter a valid JSON config file.\n")
             );
         }
+    }
+    else
+    {
+        console.log(
+            chalk.red.bold("\nJSON config file does not exist.\n")
+        );
     }
 
     // Determine if input is a valid file or directory
