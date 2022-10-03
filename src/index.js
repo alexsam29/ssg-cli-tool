@@ -97,6 +97,7 @@ module.exports.main = function main() {
             console.log(
                 chalk.red.bold("\nPlease enter a valid JSON config file.\n")
             );
+            return;
         }
     }
     else
@@ -104,6 +105,7 @@ module.exports.main = function main() {
         console.log(
             chalk.red.bold("\nJSON config file does not exist.\n")
         );
+        return;
     }
 
     // Determine if input is a valid file or directory
