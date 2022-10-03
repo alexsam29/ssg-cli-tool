@@ -4,7 +4,7 @@ A command-line interface Static Site Generator (SSG) used for generating a compl
 
 ## Overview
 
-This tool allows a user to input a text or markdown file path or a directory path and an HTML file will be created for the specified file or for every text/markdown file in the specified directory.
+This tool allows a user to input a text, markdown file path, a directory path or a JSON config file path and an HTML file will be created for the specified file or for every text/markdown file in the specified directory.
 
 ## Requirements
 
@@ -34,6 +34,11 @@ NOTE: This will <b>DELETE the specified directory</b> and create a new one with 
 ssg -i testFiles -o randomFolder -l fr
 ```
 
+8. [OPTIONAL] Specify a JSON configuration file to use instead of inputting options manually in the command line.
+```
+ssg --config .\testFiles\ssg-config.json
+```
+
 Language codes must be ISO 639-1 standard language codes. Which can be found [here](https://www.andiamo.co.uk/resources/iso-language-codes/).
 
 ### List of Options
@@ -42,9 +47,10 @@ Language codes must be ISO 639-1 standard language codes. Which can be found [he
 | ------------- | ---------------------------------------------------------------------------------------------------- | ------------------- |
 | -h, --help    | Show help                                                                                            | [boolean]           |
 | -v, --version | Show version number                                                                                  | [boolean]           |
-| -i, --input   | File or folder to generate HTML files from                                                           | [string] [required] |
+| -i, --input   | File or folder to generate HTML files from                                                           | [string] |
 | -o, --output  | Specify a different output directory (any existing contents in the directory will be <b>DELETED</b>) | [string]            |
 | -l, --lang | HTML language code for resulting HTML file(s) | [string] |
+| -c, --config | Specify a JSON configuration file to use | [string] |
 
 ## Examples
 
@@ -96,6 +102,11 @@ ssg -i .\testFiles -o .\anotherFolder
 ssg --input testFiles --lang en-GB
 ```
 
+### Specify a JSON config file
+```
+ssg --config .\testFiles\configFile.json
+```
+
 ## Optional Features Implemented
 
 -   Title parsed from text and markdown files. It will populate the `<title>` tag and add a `<h1>` tag to the top of the body.
@@ -105,3 +116,4 @@ ssg --input testFiles --lang en-GB
 -   Bold text parsed from markdown files. It will add a `<strong>` tag to any bold text.
 -   Language code added to generated HTML files using input from the `-l`/`--lang` argument.
 -   Inline code blocks parsed from markdown files. It will add a `<code>` tag to any inline code block.
+-   Allows the user to use a JSON formatted configuration file to specify all of their SSG options.
