@@ -39,7 +39,6 @@ module.exports.main = function main() {
             alias: "input",
             describe: "File name",
             type: "string",
-            demandOption: true,
         })
         .option("o", {
             alias: "output",
@@ -50,6 +49,11 @@ module.exports.main = function main() {
             alias: "lang",
             describe: "HTML language code for resulting HTML file(s)",
             type: "string",
+        })
+        .option("c", {
+            alias: "config",
+            describe: "Specify a JSON config file to use",
+            type: "string",
         }).argv;
 
     var dir;
@@ -58,11 +62,56 @@ module.exports.main = function main() {
     var isDirectory = false;
     var isFile = false;
     var isMd = false;
+    var configOptions;
+    var inputName = options.input;
+    var outputName = options.output;
+
+    if (!(options.input || options.config)) {
+        console.log(
+            chalk.red.bold("\nPlease enter a valid input/config file.\n")
+        );
+        return;
+    }
+    
+    // Get HTML language code from -l/--lang argument.  Default to en-CA.
+    if (options.lang) {
+        lang = options.lang;
+    } else {
+        lang = "en-CA";
+    }
+
+    //if config file is provided and valid, overwrite all option inputs
+    if (options.config && fs.existsSync(options.config)) {
+        if (path.extname(options.config) == ".json") {
+            configOptions = parseConfig(options.config);
+            inputName = configOptions.input;
+            inputPath = `\nPath of file or folder selected: ${inputName}`;
+            outputName = configOptions.output;
+            lang = configOptions.lang;
+            if (!lang)
+            {
+                lang = "en-CA";
+            }
+        }
+        else {
+            console.log(
+                chalk.red.bold("\nPlease enter a valid JSON config file.\n")
+            );
+            return;
+        }
+    }
+    else
+    {
+        console.log(
+            chalk.red.bold("\nJSON config file does not exist.\n")
+        );
+        return;
+    }
 
     // Determine if input is a valid file or directory
     try {
-        isDirectory = fs.lstatSync(options.input).isDirectory();
-        isFile = fs.lstatSync(options.input).isFile();
+        isDirectory = fs.lstatSync(inputName).isDirectory();
+        isFile = fs.lstatSync(inputName).isFile();
     } catch (error) {
         console.log(
             chalk.red.bold("\nPlease enter a valid file/directory path.\n")
@@ -71,11 +120,11 @@ module.exports.main = function main() {
     }
 
     // Create directory.  If no input argument, then output error msg and exit
-    if (options.output) {
+    if (outputName) {
         // Output file/directory path
         console.log(chalk.bgWhite(inputPath));
-        dir = options.output;
-    } else if (options.input) {
+        dir = outputName;
+    } else if (inputName) {
         // Output file/directory path
         console.log(chalk.bgWhite(inputPath));
         dir = path.join(__dirname, "../dist");
@@ -88,13 +137,6 @@ module.exports.main = function main() {
         return;
     }
 
-    // Get HTML language code from -l/--lang argument.  Default to en-CA.
-    if (options.lang) {
-        lang = options.lang;
-    } else {
-        lang = "en-CA";
-    }
-
     // Delete directory if it already exists, then create directory
     if (fs.existsSync(dir)) {
         fs.rmSync(dir, { recursive: true, force: true });
@@ -104,9 +146,9 @@ module.exports.main = function main() {
 
     // Read directory or file path and generate HTML
     if (isDirectory) {
-        var filenames = fs.readdirSync(options.input);
+        var filenames = fs.readdirSync(inputName);
         filenames.forEach(function (filename) {
-            var filePath = path.join(options.input, filename);
+            var filePath = path.join(inputName, filename);
             if (fs.lstatSync(filePath).isFile()) {
                 var content = fs.readFileSync(filePath, "utf-8");
                 if (
@@ -128,23 +170,38 @@ module.exports.main = function main() {
     } else if (isFile) {
         // If input file is not a txt file, output error msg
         if (
-            path.extname(options.input) != ".txt" &&
-            path.extname(options.input) != ".md"
+            path.extname(inputName) != ".txt" &&
+            path.extname(inputName) != ".md"
         ) {
             //Check if file extension is .txt or .md
             console.log(chalk.red.bold("Please select a text or markdown file."));
             return;
         }
 
-        if (path.extname(options.input) == ".md") {
+        if (path.extname(inputName) == ".md") {
             // Check and flag for .md files
             isMd = true;
         }
 
         // Create HTML for single txt file
-        var data = fs.readFileSync(options.input, "utf-8");
-        HTMLcreate(options.input.split("\\").slice(-1)[0].split(".")[0], data);
+        var data = fs.readFileSync(inputName, "utf-8");
+        if (options.config)
+        {
+            HTMLcreate(inputName.split("/").slice(-1)[0].split(".")[0], data);
+        }
+        else
+        {
+            HTMLcreate(inputName.split("\\").slice(-1)[0].split(".")[0], data);
+        }
+        
         indexCreate(dir);
+    }
+
+    //Parse JSON config file
+    function parseConfig(configFile) {
+        var configs = fs.readFileSync(configFile, "utf-8");
+        var JSONconfigs = JSON.parse(configs);
+        return JSONconfigs;
     }
 
     // HTML file creation
