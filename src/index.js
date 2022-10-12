@@ -100,7 +100,7 @@ module.exports.main = function main() {
             return;
         }
     }
-    else
+    else if (!options.input)
     {
         console.log(
             chalk.red.bold("\nJSON config file does not exist.\n")
