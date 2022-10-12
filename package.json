@@ -20,10 +20,8 @@
   },
   "homepage": "https://github.com/alexsam29/ssg-cli-tool#readme",
   "dependencies": {
-    "boxen": "4.0",
     "chalk": "2.4",
     "create-html": "^4.1.0",
     "yargs": "13.2"
-  },
-  "devDependencies": {}
+  }
 }
