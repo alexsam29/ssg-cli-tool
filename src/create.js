@@ -3,31 +3,39 @@ const path = require("path");
 const chalk = require("chalk");
 const createHTML = require("create-html");
 const fileCreatedPath = "HTML file created --> Path: ";
+const mdParser = require("markdown-it");
 
 // HTML file creation
 function HTMLfile(filename, content, dir, lang, isMd) {
     var title = filename;
-    // if markdown process markdown special characters
-    if (isMd == true) {
-        content = processMD(content, "__", "<strong>", "</strong>");
-        content = processMD(content, "_", "<i>", "</i>");
-        content = processMD(content, "**", "<strong>", "</strong>");
-        content = processMD(content, "*", "<i>", "</i>");
-        content = processMD(content, "`", "<code>", "</code>");
-    }
-    var body = content.split(/\r?\n\r?\n/);
-    var newBody = "<h1>" + title + "</h1>";
+    var body = "<h1>" + title + "</h1>";
 
-    // Append rest of the body after the title
-    body.forEach(function (line, index) {
-        if (index !== 0) {
-            newBody += "\n<p>" + line + "</p>\n";
-        }
-    });
+    // if markdown, parse markdown into HTML
+    if (isMd == true) {
+        var md = new mdParser()
+            .use(require("markdown-it-sub"))
+            .use(require("markdown-it-sup"))
+            .use(require("markdown-it-footnote"))
+            .use(require("markdown-it-deflist"))
+            .use(require('markdown-it-abbr'))
+            .use(require('markdown-it-emoji'))
+            .use(require('markdown-it-ins'))
+            .use(require('markdown-it-mark'));
+        body += "\n" + md.render(content);
+    } else {
+        var splitContent = content.split(/\r?\n\r?\n/);
+
+        // Append rest of the body after the title
+        splitContent.forEach(function (line, index) {
+            if (index !== 0) {
+                body += "\n<p>" + line + "</p>";
+            }
+        });
+    }
 
     var html = createHTML({
         title: title,
-        body: newBody,
+        body: body,
         lang: lang,
     });
 
@@ -63,24 +71,6 @@ function indexPage(dir, lang) {
     console.log(
         chalk.green.bold(fileCreatedPath + `${path.basename(dir)}\\index.html`)
     );
-}
-
-function processMD(mdText, pattern, openTag, closeTag) {
-    let result = "";
-    let closed = true;
-
-    const arr = mdText.split(pattern);
-
-    arr.forEach((element, ind) => {
-        result += element;
-        if (ind < arr.length - 1) {
-            result += ind % 2 === 0 ? openTag : closeTag;
-            closed = !closed;
-        }
-    });
-    result += !closed ? closeTag : "";
-
-    return result;
 }
 
 module.exports = {
