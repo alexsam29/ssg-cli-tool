@@ -6,19 +6,18 @@ Silver Blaze
 
 Hello from mars :satellite:
 
-*[HTML]: Hyper Text Markup Language
-*[W3C]:  World Wide Web Consortium
+_[HTML]: Hyper Text Markup Language
+_[W3C]: World Wide Web Consortium
 The HTML specification
 is maintained by the W3C.
 
 Here is a footnote reference,[^1] and another.[^longnote]
 
 [^1]: Here is the footnote.
-
 [^longnote]: Here's one with multiple blocks.
 
     Subsequent paragraphs are indented to show that they
-belong to the previous footnote.
+    belong to the previous footnote.
 
 I am afraid, Watson, that I shall have to go,” said Holmes, as we
 sat down together to our breakfast one morning.
@@ -94,18 +93,7 @@ looking after the case, inviting my co-operation.”_
 (test case 6)“Tuesday evening!” `I exclaimed`. “And this is Thursday morning.
 Why didn’t you go down yesterday?”
 
-(test case 7)`“Because I made a blunder, my dear Watson—which is, I am afraid,
-a more common occurrence than any one would think who only knew
-me through your memoirs. The fact is that I could not believe it
-possible that the most remarkable horse in England could long
-remain concealed, especially in so sparsely inhabited a place as
-the north of Dartmoor. From hour to hour yesterday I expected to
-hear that he had been found, and that his abductor was the
-murderer of John Straker. When, however, another morning had
-come, and I found that beyond the arrest of young Fitzroy Simpson
-nothing had been done, I felt that it was time for me to take
-action. Yet in some ways I feel that yesterday has not been
-wasted.”`
+(test case 7)`“Because I made a blunder, my dear Watson—which is, I am afraid, a more common occurrence than any one would think who only knew me through your memoirs. The fact is that I could not believe it possible that the most remarkable horse in England could long remain concealed, especially in so sparsely inhabited a place as the north of Dartmoor. From hour to hour yesterday I expected to hear that he had been found, and that his abductor was the murderer of John Straker. When, however, another morning had come, and I found that beyond the arrest of young Fitzroy Simpson nothing had been done, I felt that it was time for me to take action. Yet in some ways I feel that yesterday has not been wasted.”`
 
 “You have formed a theory, then?”
 
