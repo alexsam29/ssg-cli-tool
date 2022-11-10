@@ -73,3 +73,23 @@ It's recommended to do this on all files that have been added or changed.
 Much like code formatting, using the command line to check for coding errors should be done at the minimum. However, you can integrate ESLint into your editor/IDE of choice to make the process much easier.
 
 [Click here](https://eslint.org/docs/latest/user-guide/integrations) to find out how to integrate ESLint in your editor/IDE.
+
+## Testing
+
+This project uses [Jest](https://jestjs.io/) for testing. The main purpose for testing is to test the output of the SSG and to test functions used to assist in HTML file creation.
+
+To add a test, go to `tests/test.js` and a test with a short description of what it tests.
+
+To run the tests, use the command:
+
+```
+npm test
+```
+
+In addition, to run a code coverage analysis, run the command:
+
+```
+npm test -- --coverage --collectCoverageFrom="./src/**"
+```
+
+Code coverage analysis allows you to see how much of the source code the tests cover. As of right now there's no required minimum. Run the command if you're interested in taking a look at the analysis.

@@ -4,7 +4,7 @@
   "description": "A command-line interface SSG tool used for generating a complete HTML web site from raw data and files.",
   "main": "bin/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "prepare": "husky install"
   },
   "repository": {
@@ -42,6 +42,7 @@
     "eslint-plugin-n": "^15.4.0",
     "eslint-plugin-promise": "^6.1.1",
     "husky": "^8.0.1",
+    "jest": "^29.3.1",
     "lint-staged": "^13.0.3",
     "prettier": "2.7.1"
   },

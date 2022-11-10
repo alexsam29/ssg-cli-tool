@@ -46,6 +46,8 @@ function HTMLfile(filename, content, dir, lang, isMd) {
       fileCreatedPath + `${path.basename(dir) + "\\" + title}.html`
     )
   );
+
+  return html;
 }
 
 // Create index HTML file
@@ -72,6 +74,8 @@ function indexPage(dir, lang) {
   console.log(
     chalk.green.bold(fileCreatedPath + `${path.basename(dir)}\\index.html`)
   );
+
+  return html;
 }
 
 module.exports = {
