@@ -72,10 +72,10 @@ describe("\nSSG Testing", function () {
   });
   test("Test: osSpecificPath()", function () {
     expect(osSpecificPath("../testFiles/testDist")).toBe(
-      "..\\testFiles\\testDist"
+      "../testFiles/testDist"
     );
   });
   test("Test: osSpecificPath()", function () {
-    expect(osSpecificPath()).toBeFalsy();
+    expect(osSpecificPath()).toBeTruthy();
   });
 });
