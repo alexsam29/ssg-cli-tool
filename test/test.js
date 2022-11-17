@@ -58,11 +58,17 @@ describe("\nSSG Testing", function () {
   test("Test: isMd() == false", function () {
     expect(isMd("testFiles/notafile.txt")).toBeFalsy();
   });
+  test("Test: isMd() throws error and returns false", function () {
+    expect(isMd(12546)).toBeFalsy();
+  });
   test("Test: configExist() == true", function () {
     expect(configExist("testFiles/ssg-config.json")).toBeTruthy();
   });
   test("Test: configExist() == false", function () {
     expect(configExist("testFiles/notafile.txt")).toBeFalsy();
+  });
+  test("Test: configExist() throws error and returns false", function () {
+    expect(configExist(11234)).toBeFalsy();
   });
   test("Test: getLang() with no arguments", function () {
     expect(getLang()).toBe("en-CA");
