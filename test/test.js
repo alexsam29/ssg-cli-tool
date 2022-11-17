@@ -7,6 +7,7 @@ const {
   isFile,
   isMd,
   configExist,
+  osSpecificPath,
 } = require("../src/utils");
 
 /* eslint-disable no-undef */
@@ -68,5 +69,13 @@ describe("\nSSG Testing", function () {
   });
   test("Test: getLang() eith 1 argument", function () {
     expect(getLang("fr")).toBe("fr");
+  });
+  test("Test: osSpecificPath()", function () {
+    expect(osSpecificPath("../testFiles/testDist")).toBe(
+      "..\\testFiles\\testDist"
+    );
+  });
+  test("Test: osSpecificPath()", function () {
+    expect(osSpecificPath()).toBeFalsy();
   });
 });
