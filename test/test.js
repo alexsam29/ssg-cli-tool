@@ -15,9 +15,9 @@ describe("\nSSG Testing", function () {
   test("MD --> HTML file conversion", function () {
     expect(
       HTMLfile(
-        "input MD",
+        "../testFiles/input MD.md",
         fs.readFileSync("testFiles/input MD.md", "utf-8"),
-        path.join(__dirname, "../dist"),
+        path.join(__dirname, "../testFiles/testDist"),
         getLang(),
         true
       )
@@ -26,9 +26,9 @@ describe("\nSSG Testing", function () {
   test("TXT --> HTML file conversion", function () {
     expect(
       HTMLfile(
-        "Silver Blaze",
+        "../testFiles/Silver Blaze.txt",
         fs.readFileSync("testFiles/Silver Blaze.txt", "utf-8"),
-        path.join(__dirname, "../dist"),
+        path.join(__dirname, "../testFiles/testDist"),
         getLang(),
         false
       )
