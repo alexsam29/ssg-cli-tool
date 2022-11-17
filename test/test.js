@@ -35,7 +35,7 @@ describe("\nSSG Testing", function () {
     ).toMatchSnapshot();
   });
   test("Index file creation", function () {
-    expect(indexPage("testFiles")).toMatchSnapshot();
+    expect(indexPage("testFiles/testDist")).toMatchSnapshot();
   });
 
   // Util testing

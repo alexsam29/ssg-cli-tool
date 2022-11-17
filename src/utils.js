@@ -41,10 +41,19 @@ function getLang(lang) {
   }
 }
 
+function osSpecificPath(oldPath) {
+  if (oldPath) {
+    let newPath = path.parse(oldPath);
+    newPath = path.join(newPath.dir, newPath.base);
+    return newPath;
+  }
+}
+
 module.exports = {
   isDirectory,
   isFile,
   isMd,
   configExist,
   getLang,
+  osSpecificPath,
 };

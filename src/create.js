@@ -7,7 +7,7 @@ const MdParser = require("markdown-it");
 
 // HTML file creation
 function HTMLfile(filename, content, dir, lang, isMd) {
-  const title = filename;
+  const title = path.basename(filename).split(".")[0];
   let body = "<h1>" + title + "</h1>";
 
   // if markdown, parse markdown into HTML
@@ -40,10 +40,10 @@ function HTMLfile(filename, content, dir, lang, isMd) {
   });
 
   // Write to HTML file
-  fs.writeFileSync(`${dir + "/" + path.basename(title)}.html`, html);
+  fs.writeFileSync(`${path.join(dir, path.basename(title))}.html`, html);
   console.log(
     chalk.green.bold(
-      fileCreatedPath + `${path.basename(dir) + "\\" + title}.html`
+      fileCreatedPath + `${path.join(path.basename(dir), title)}.html`
     )
   );
 
@@ -57,9 +57,10 @@ function indexPage(dir, lang) {
 
   // Add links to HTML body
   filenames.forEach(function (filename) {
-    body += `\n<li><a href=".\\${path.basename(dir)}\\${filename}">${
+    body += `\n<li><a href="${path.join(
+      path.basename(dir),
       filename.split(".")[0]
-    }</a></li>\n`;
+    )}.html">${path.basename(filename).split(".")[0]}</a></li>\n`;
   });
   body += "</ul>";
 
@@ -72,7 +73,9 @@ function indexPage(dir, lang) {
   // Write to HTML file
   fs.writeFileSync(`index.html`, html);
   console.log(
-    chalk.green.bold(fileCreatedPath + `${path.basename(dir)}\\index.html`)
+    chalk.green.bold(
+      fileCreatedPath + `${path.join(path.basename(dir), "index.html")}`
+    )
   );
 
   return html;
