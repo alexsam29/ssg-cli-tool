@@ -1,6 +1,6 @@
 {
   "name": "ssg-cli-tool",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A command-line interface SSG tool used for generating a complete HTML web site from raw data and files.",
   "main": "bin/app.js",
   "scripts": {
