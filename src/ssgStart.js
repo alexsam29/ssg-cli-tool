@@ -44,7 +44,7 @@ module.exports.ssgStart = function ssgStart(options) {
   if (outputPath) {
     dir = outputPath;
   } else if (inputPath) {
-    dir = path.join(__dirname, "dist");
+    dir = path.join(path.resolve("./"), "dist");
   } else {
     console.log(
       chalk.red.bold(
