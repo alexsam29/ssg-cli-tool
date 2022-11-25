@@ -15,7 +15,7 @@ A recent version of [Node.js](https://nodejs.org/en/) must be downloaded and ins
 1.  Install by running the command:
 
 ```
-npm install ssg-cli-tool
+npm install -g ssg-cli-tool
 ```
 
 2.  Run the SSG tool by inputting a file or folder path.
