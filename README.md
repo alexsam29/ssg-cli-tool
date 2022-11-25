@@ -12,17 +12,20 @@ A recent version of [Node.js](https://nodejs.org/en/) must be downloaded and ins
 
 ## Instructions
 
-1.  Clone or download the repository on to your local machine. Remember the file location!
-2.  Open a terminal or command window and move to the directory where the repository was downloaded to.
-3.  Before running the tool, run the command `npm install` followed by `npm install -g` to install npm packages and install the tool globally.
-4.  Run the SSG tool by inputting a file or folder path.
+1.  Install by running the command:
+
+```
+npm -i ssg-cli-tool
+```
+
+2.  Run the SSG tool by inputting a file or folder path.
 
 ```
 ssg -i file_path
 ```
 
-5.  If a file was specified, an HTML file will be created and added into the `dist` directory. If a directory was specified, HTML files will be created for every text/markdown file in the directory and they will be added into the `dist` directory.
-6.  [OPTIONAL] Specify a directory to output the HTML files to by adding the path as a second argument. If the directory does not exist, a new one will be created. If it does exist, the current contents will be deleted and only the HTML files will be added.
+3.  If a file was specified, an HTML file will be created and added into the `dist` directory. If a directory was specified, HTML files will be created for every text/markdown file in the directory and they will be added into the `dist` directory.
+4.  [OPTIONAL] Specify a directory to output the HTML files to by adding the path as a second argument. If the directory does not exist, a new one will be created. If it does exist, the current contents will be deleted and only the HTML files will be added.
 
 ```
 ssg -i file_path -o directoryPath
@@ -30,13 +33,13 @@ ssg -i file_path -o directoryPath
 
 NOTE: This will <b>DELETE the specified directory</b> and create a new one with the same name. <b>DO NOT SPECIFY A DIRECTORY WITH IMPORTANT FILES</b>.
 
-7. [OPTIONAL] Indicate the language to use when generating the lang attribute on the root <html> element in the resulting HTML file(s). Default language is `en-CA`.
+5. [OPTIONAL] Indicate the language to use when generating the lang attribute on the root <html> element in the resulting HTML file(s). Default language is `en-CA`.
 
 ```
 ssg -i testFiles -o randomFolder -l fr
 ```
 
-8. [OPTIONAL] Specify a JSON configuration file to use instead of inputting options manually in the command line.
+6. [OPTIONAL] Specify a JSON configuration file to use instead of inputting options manually in the command line.
 
 ```
 ssg --config .\testFiles\ssg-config.json
